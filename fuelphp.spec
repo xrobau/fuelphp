@@ -1,6 +1,6 @@
 Name:		fuelphp
 Version:	1.7.1
-Release:	2.%{shortcommit}
+Release:	3
 Summary:	FuelPHP is a simple PHP 5.3 framework
 Packager:	Rob Thomas <xrobau@gmail.com>
 
@@ -11,9 +11,10 @@ URL:		http://fuelphp.com
 BuildArch:	noarch
 
 Source0:	http://fuelphp.com/files/download/26#/%{name}-%{version}.zip
-Source1:	https://github.com/xrobau/core/archive/%{commit}/core-%{commit}.tar.gz
+# Upgrade PHPSecLib to the latest in (unreleased) 1.8
+Source1:	https://github.com/fuel/core/archive/%{commit}/core-%{commit}.tar.gz
 
-%global	commit 2c3aaa273ca9aff2779c10343f528b6b2768015c
+%global	commit 5e0344d7b826a3b630f6a7f4205a6369bff6054b
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %description
@@ -24,7 +25,7 @@ FuelPHP is a simple, flexible, community driven PHP 5.3+ framework, based on the
 
 %install
 
-# Upgrade phpseclib from the xrobau tree
+# Upgrade phpseclib from the 1.8 branch
 rm -rf %{_builddir}/%{name}-%{version}/fuel/core/vendor/phpseclib
 mv %{_builddir}/core-%{commit}/vendor/phpseclib %{_builddir}/%{name}-%{version}/fuel/core/vendor/phpseclib
 
