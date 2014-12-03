@@ -1,6 +1,6 @@
 Name:		fuelphp
 Version:	1.7.2
-Release:	2
+Release:	4
 Summary:	FuelPHP is a simple PHP 5.3 framework
 Packager:	Rob Thomas <xrobau@gmail.com>
 
@@ -10,22 +10,26 @@ URL:		http://fuelphp.com
 
 BuildArch:	noarch
 
-Source:	http://fuelphp.com/files/download/28#/%{name}-%{version}.zip
+Source0:	http://fuelphp.com/files/download/28#/%{name}-%{version}.zip
+Source1:	https://github.com/xrobau/core/archive/%{commit}.tar.gz
 
-Patch0: 0001-This-appears-to-fix-the-encrypt-decrypt-issues-with-.patch
+Patch0:		0001-Register-force_login-so-it-can-be-logged-out.patch
 
+%global commit 7ff78cbbbe00ff10262b25d612dec039111dfaa2
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
 %description
 FuelPHP is a simple, flexible, community driven PHP 5.3+ framework, based on the best ideas of other frameworks, with a fresh start!
 
 %prep
-%setup
+%setup -b1
+cd fuel/packages/auth
 %patch0 -p1
 
 %install
 
-# Upgrade phpseclib from the 1.8 branch
-#rm -rf %{_builddir}/%{name}-%{version}/fuel/core/vendor/phpseclib
-#mv %{_builddir}/core-%{commit}/vendor/phpseclib %{_builddir}/%{name}-%{version}/fuel/core/vendor/phpseclib
+# Upgrade phpseclib from rob's branch
+rm -rf %{_builddir}/%{name}-%{version}/fuel/core/vendor/phpseclib
+mv %{_builddir}/core-%{commit}/vendor/phpseclib %{_builddir}/%{name}-%{version}/fuel/core/vendor/phpseclib
 
 # Now move everything into the dest directories
 rm -rf %{buildroot}
